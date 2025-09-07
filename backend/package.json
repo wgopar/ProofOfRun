@@ -1,0 +1,38 @@
+{
+  "name": "proofofrun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "scrape": "tsc && node dist/scraper/main.js",
+    "post-process": "tsc && node dist/scraper/postprocess.js",
+    "build-tree": "tsc && node dist/scripts/buildTree.js",
+    "validate-tree": "tsc && node dist/scripts/validateTree.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wgopar/ProofOfRun.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wgopar/ProofOfRun/issues"
+  },
+  "homepage": "https://github.com/wgopar/ProofOfRun#readme",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.35",
+    "@types/circomlibjs": "^0.1.6",
+    "@types/node": "^24.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
+    "circomlibjs": "^0.1.7",
+    "dotenv": "^17.2.2",
+    "merkletreejs": "^0.5.2",
+    "playwright": "^1.55.0"
+  }
+}
