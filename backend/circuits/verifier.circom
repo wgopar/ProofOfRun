@@ -1,37 +1,71 @@
-pragma circom 2.0.0;
+pragma circom 2.1.9;
 
-include "circomlib/poseidon.circom";
+include "poseidon.circom";
+include "mux1.circom"; // multiplexer component (0, 1) based on selector
 
-// Merkle Tree Verifier Circuit
-// Verifies that a given leaf is part of a Merkle tree with a known root
+template merkleStep(){
+  /*
+  One step in the Merkle tree path computation.
+  Inputs:
+    - cur: current hash (node)
+    - pathElement: sibling hash at this level
+    - selector: 0 if cur is left child, 1 if cur is right child
+  Output:
+    - out: resulting parent hash
+  */
+  signal input cur;
+  signal input pathElement;
+  signal input selector;
+  signal output out;
+
+  // compute left and right hashes
+  component hashLeft = Poseidon(2);
+  hashLeft.inputs[0] <== cur;
+  hashLeft.inputs[1] <== pathElement;
+
+  component hashRight = Poseidon(2);
+  hashRight.inputs[0] <== pathElement;
+  hashRight.inputs[1] <== cur;
+
+  // select the correct hash based on selector
+  component mux = Mux1();
+  mux.c[0] <== hashLeft.out;
+  mux.c[1] <== hashRight.out;
+  mux.s <== selector; 
+
+  out <== mux.out; // selected hash
+}
+
 template verifier(depth){
-  signal input leaf; // The leaf value to prove membership for
-  signal input pathElements[depth]; // The sibling hashes along the path to the root
-  signal input pathIndex[depth]; // The indices (0 or 1) indicating left/right position at each level
-  signal input root; // The expected Merkle root  
+  /*
+  Verifier circuit for a Merkle tree of given depth.
+  Inputs:
+    - leaf: the leaf node to verify
+    - pathElements: array of sibling hashes along the path to the root
+    - pathIndex: array of indices (0 or 1) indicating left/right position at each level
+    - root: the expected Merkle root
+  Output:
+    - Ensures that the computed root from the leaf and path matches the provided root.
+  */
+  signal input leaf; 
+  signal input pathElements[depth]; 
+  signal input pathIndex[depth]; 
+  signal input root; 
 
-  // Start at leaf
-  signal = cur;
-  cur <== leaf;
+  signal cur[depth + 1]; // array of signals to hold current hash at each level
+  cur[0] <== leaf; // start at leaf
 
+  component steps[depth];
   for (var i = 0; i < depth; i++) {
-    // Determine left and right children based on pathIndex
-    signal left;
-    signal right;
-
-    left <== (1 - pathIndex[i]) * cur + pathIndex[i] * pathElements[i];
-    right <== pathIndex[i] * cur + (1 - pathIndex[i]) * pathElements[i];
-
-    // Hash the concatenated left and right children to get the parent
-    component hasher = Poseidon(2);
-    hasher.inputs[0] <== left;
-    hasher.inputs[1] <== right;
-    cur <== hasher.out;
+    steps[i] = merkleStep();
+    steps[i].cur <== cur[i];  
+    steps[i].pathElement <== pathElements[i]; 
+    steps[i].selector <== pathIndex[i];
+    cur[i + 1] <== steps[i].out;
   }
 
-  root == cur;
-  
+  cur[depth] === root; // constraint, ensure equality with root
 }
 
 // depth = 13 for 6,537 runners (next power of 2 = 8192 = 2^13)
-component main = MerkleMembership(13); 
+component main = verifier(13); 

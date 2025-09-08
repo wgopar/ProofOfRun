@@ -5,3 +5,10 @@ node_modules
 .DS_Store
 
 /*/dist
+
+# Circom / Snark artifacts
+*.r1cs
+*.zkey
+*_js/
+verifier.sol
+verifier.sym

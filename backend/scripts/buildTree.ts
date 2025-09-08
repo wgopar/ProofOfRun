@@ -36,7 +36,6 @@ function toBuffer(x: bigint): Buffer {
 
 
   // Build Merkle Tree
-  // TODO: make sure to be able to handle odd leaves in Circom Cuircuit generation
   const tree = new MerkleTree(leaves, poseidonHash, { duplicateOdd: true, sortPairs: true }); // odd nodes duplicated, pairs sorted
   const root = tree.getRoot().toString("hex");
 
