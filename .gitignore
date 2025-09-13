@@ -1,14 +1,31 @@
-node_modules
+# Node modules
+node_modules/
 
+# Environment variables
 .env
 
+# MacOS system files
 .DS_Store
 
-/*/dist
+# Build output folders
+*/dist/
 
-# Circom / Snark artifacts
+# Circom build artifacts
 *.r1cs
+*.sym
+*.ptau
 *.zkey
-*_js/
-verifier.sol
-verifier.sym
+*.wtns
+
+# SnarkJS / proof outputs
+*.json
+*.dat
+*.key
+
+# Logs
+*.log
+
+# Output folders
+build/
+artifacts/
+output/

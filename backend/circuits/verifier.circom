@@ -18,21 +18,21 @@ template merkleStep(){
   signal input selector;
   signal output out;
 
-  // compute left and right hashes
+  // assume left sibling
   component hashLeft = Poseidon(2);
-  hashLeft.inputs[0] <== cur;
-  hashLeft.inputs[1] <== pathElement;
+  hashLeft.inputs[0] <== pathElement;
+  hashLeft.inputs[1] <== cur;
 
+  // assume right sibling
   component hashRight = Poseidon(2);
-  hashRight.inputs[0] <== pathElement;
-  hashRight.inputs[1] <== cur;
+  hashRight.inputs[0] <== cur;
+  hashRight.inputs[1] <== pathElement;
 
   // select the correct hash based on selector
   component mux = Mux1();
   mux.c[0] <== hashLeft.out;
   mux.c[1] <== hashRight.out;
   mux.s <== selector; 
-
   out <== mux.out; // selected hash
 }
 
@@ -63,8 +63,11 @@ template verifier(depth){
     steps[i].selector <== pathIndex[i];
     cur[i + 1] <== steps[i].out;
   }
-
-  cur[depth] === root; // constraint, ensure equality with root
+  //log("Computed Root: ");
+  //log(cur[depth]);
+  //log("Expected Root: ");
+  //log(root);
+  root === cur[depth]; // enforce equality
 }
 
 // depth = 13 for 6,537 runners (next power of 2 = 8192 = 2^13)
