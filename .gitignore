@@ -29,3 +29,4 @@ node_modules/
 build/
 artifacts/
 output/
+verifier_js/

@@ -43,3 +43,6 @@ snarkjs groth16 prove ./circuits/verifier_0001.zkey ./circuits/witness.wtns ./ci
 
 ##### Verify Proof
 snarkjs groth16 verify ./circuits/verification_key.json ./circuits/public.json ./circuits/proof.json
+
+##### Generate Solidity Verifier
+snarkjs zkey export solidityverifier ./circuits/verifier_0001.zkey ../hardhat/contracts/Groth16Verifier.sol
