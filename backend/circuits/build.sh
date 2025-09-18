@@ -44,5 +44,10 @@ snarkjs groth16 prove ./circuits/verifier_0001.zkey ./circuits/witness.wtns ./ci
 ##### Verify Proof
 snarkjs groth16 verify ./circuits/verification_key.json ./circuits/public.json ./circuits/proof.json
 
+##### Copy Zkey, WASN, wintess_calculator.js to frontend
+cp ./circuits/verifier_0001.zkey ../frontend/public/verifier.zkey
+cp ./circuits/verifier_js/verifier.wasm ../frontend/public/verifier.wasm
+cp ./circuits/verifier_js/witness_calculator.js ../frontend/src/zk/witness_calculator.js
+
 ##### Generate Solidity Verifier
 snarkjs zkey export solidityverifier ./circuits/verifier_0001.zkey ../hardhat/contracts/Groth16Verifier.sol

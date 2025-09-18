@@ -47,10 +47,10 @@ template verifier(depth){
   Output:
     - Ensures that the computed root from the leaf and path matches the provided root.
   */
+  signal input root; // only public input, rest private
   signal input leaf; 
   signal input pathElements[depth]; 
   signal input pathIndex[depth]; 
-  signal input root; 
 
   signal cur[depth + 1]; // array of signals to hold current hash at each level
   cur[0] <== leaf; // start at leaf
@@ -63,12 +63,9 @@ template verifier(depth){
     steps[i].selector <== pathIndex[i];
     cur[i + 1] <== steps[i].out;
   }
-  //log("Computed Root: ");
-  //log(cur[depth]);
-  //log("Expected Root: ");
-  //log(root);
   root === cur[depth]; // enforce equality
 }
 
 // depth = 13 for 6,537 runners (next power of 2 = 8192 = 2^13)
-component main = verifier(13); 
+component main {public [root]} = verifier(13);
+
