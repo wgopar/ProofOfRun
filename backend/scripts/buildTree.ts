@@ -59,17 +59,17 @@ function bufferToBigInt(buf: Buffer): bigint {
 
   // Precompute proofs for saving tree
   const entries = results.map((runner, idx) => ({
-    bib: runner.bib,
-    time: runner.time,
     leaf: bufferToBigInt(leaves[idx]).toString(),
     pathElements: tree.getProof(leaves[idx]).map(p => bufferToBigInt(p.data).toString()),
     pathIndex: tree.getProof(leaves[idx]).map(p => (p.position === "right" ? 1 : 0)),
+    root: root
   }));
 
-  fs.writeFileSync("./data/output/proofs.json", JSON.stringify({ root, entries }, null, 2));
+  fs.writeFileSync("./data/output/proofs.json", JSON.stringify({ entries }, null, 2));
   console.log("Proofs saved to ./data/output/proofs.json");
   console.log("Tree depth:", tree.getDepth());
 
+  /*
   // Debug: run through one proof manually
   const proof = tree.getProof(leaves[0]); // first runner
   let cur = bufferToBigInt(leaves[0]); // start at leaf
@@ -93,4 +93,5 @@ function bufferToBigInt(buf: Buffer): bigint {
 
   console.log("Final JS root from proof:", cur.toString());
   console.log("Tree root:", root);
+  */
 })();

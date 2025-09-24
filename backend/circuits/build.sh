@@ -16,6 +16,11 @@ jq '{
       root
     }' ./data/output/proofs.json > ./circuits/test_input.json
 
+# store root in single json key-value pair for easy import in hardhat
+jq '{ 
+      value: .root
+    }' ./data/output/proofs.json > ./circuits/merkleRoot.json
+
 node ./circuits/verifier_js/generate_witness.js ./circuits/verifier_js/verifier.wasm ./circuits/test_input.json ./circuits/witness.wtns
 
 ##### Powers of Tau Ceremony
@@ -44,7 +49,7 @@ snarkjs groth16 prove ./circuits/verifier_0001.zkey ./circuits/witness.wtns ./ci
 ##### Verify Proof
 snarkjs groth16 verify ./circuits/verification_key.json ./circuits/public.json ./circuits/proof.json
 
-##### Copy Zkey, WASN, wintess_calculator.js to frontend
+##### Copy Zkey, WASM, wintess_calculator.js to frontend
 cp ./circuits/verifier_0001.zkey ../frontend/public/verifier.zkey
 cp ./circuits/verifier_js/verifier.wasm ../frontend/public/verifier.wasm
 cp ./circuits/verifier_js/witness_calculator.js ../frontend/src/zk/witness_calculator.js
