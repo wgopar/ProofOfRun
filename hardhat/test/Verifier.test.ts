@@ -25,6 +25,7 @@ describe("Verification of San Francisco Marathon Runners", async function () {
     const proofPathFull = join(__dirname, proofPath);
     const proofs = await readFile(proofPathFull, 'utf8');
     const proofsJson = JSON.parse(proofs);
+    const proofsObj: any = Object.entries(proofsJson) // [ ["leaf", {data}], ["leaf", data] ] formatting
 
     // Network and Accounts Set up using Viem for contract interaction
     const publicClient = await viem.getPublicClient();
@@ -45,9 +46,15 @@ describe("Verification of San Francisco Marathon Runners", async function () {
     it("Verify a Correct Proof", async function () {
         // Scenario 1: Verify a valid proof for a runner who completed the marathon
         // here we are verifying contract with deployer account
+        let runner = proofsObj[0] // Take first runners proof
+        let proof = {
+            leaf: runner[0], 
+            pathElements: runner[1].pathElements,
+            pathIndex: runner[1].pathIndex,
+            root: runner[1].root
+        }
 
-        let inputs = proofsJson.entries[0]; // Take first runners proof
-        const { argv } = await generateProof(inputs); // snarkjs proof generation
+        const { argv } = await generateProof(proof); // snarkjs proof generation
         const tx = await marathonVerifier.write.verifyRunner(argv);
         const receipt = await publicClient.waitForTransactionReceipt({ hash: tx });
         const parsed = parseEventLogs({
@@ -72,11 +79,17 @@ describe("Verification of San Francisco Marathon Runners", async function () {
             client: client2,   // now bound to client2
         });
 
-        let inputs = proofsJson.entries[1]; // Take second runners proof
+        let runner = proofsObj[1] // Take second runners proof
+        let proof = {
+            leaf: runner[0], 
+            pathElements: runner[1].pathElements,
+            pathIndex: runner[1].pathIndex,
+            root: runner[1].root    
+        }
 
         try {
 
-            const { argv } = await generateProof(inputs); 
+            const { argv } = await generateProof(proof); 
             
             // tamper with generated proof to make solidity verification fail
             argv[0][0] = '0x' + (BigInt(argv[0][0]) + 1n).toString(16);
@@ -102,10 +115,16 @@ describe("Verification of San Francisco Marathon Runners", async function () {
             client: client3,   // now bound to client3
         });
 
-        let inputs = proofsJson.entries[2]; // Take third runners proof
+        let runner = proofsObj[2] // Take third runners proof
+        let proof = {
+            leaf: runner[0], 
+            pathElements: runner[1].pathElements,
+            pathIndex: runner[1].pathIndex,
+            root: runner[1].root    
+        }
         
         try {
-            const { argv } = await generateProof(inputs); 
+            const { argv } = await generateProof(proof); 
             const tx1 = await marathonVerifier.write.verifyRunner(argv);
             const receipt1 = await publicClient.waitForTransactionReceipt({ hash: tx1 });
 
@@ -153,7 +172,9 @@ describe("Verification of San Francisco Marathon Runners", async function () {
             client: deployer,   // now bound to deployer (owner)
         });
 
-        let newRoot = BigInt(proofsJson.entries[0].root) + BigInt(1);
+        let root = proofsObj[0][1].root;
+
+        let newRoot = BigInt(root) + BigInt(1);
         const tx = await marathonVerifier.write.updateMerkleRoot([newRoot]);
         const receipt = await publicClient.waitForTransactionReceipt({ hash: tx });
         const updatedRoot = await marathonVerifier.read.merkleRoot();
@@ -170,7 +191,8 @@ describe("Verification of San Francisco Marathon Runners", async function () {
             client: client1,   // now bound to client1 (not owner)
         });
 
-        let newRoot = BigInt(proofsJson.entries[0].root) + BigInt(2);
+        let root = proofsObj[0][1].root;
+        let newRoot = BigInt(root) + BigInt(2);
         
         try {
             const tx = await marathonVerifier.write.updateMerkleRoot([newRoot]);

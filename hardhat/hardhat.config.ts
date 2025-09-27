@@ -1,6 +1,5 @@
 import type { HardhatUserConfig } from "hardhat/config";
 import hardhatToolboxViemPlugin from "@nomicfoundation/hardhat-toolbox-viem";
-import HardhatIgnitionEthersPlugin from '@nomicfoundation/hardhat-ignition-ethers'
 import "@nomicfoundation/hardhat-verify";
 import dotenv from 'dotenv';
 dotenv.config();
