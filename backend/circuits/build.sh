@@ -60,4 +60,5 @@ cp ./circuits/verifier_js/verifier.wasm ../frontend/public/verifier.wasm
 cp ./circuits/verifier_js/witness_calculator.js ../frontend/src/zk/witness_calculator.js
 
 ##### Generate Solidity Verifier
+## @NOTE: Generated Solidty Contract is modified to work correctly with our application (in inherited contract)
 snarkjs zkey export solidityverifier ./circuits/verifier_0001.zkey ../hardhat/contracts/Groth16Verifier.sol
