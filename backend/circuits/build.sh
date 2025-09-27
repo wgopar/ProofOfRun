@@ -26,8 +26,6 @@ jq 'to_entries
       }' ./data/output/proofs.json > ./circuits/merkleRoot.json
 
 
-exit 0
-
 node ./circuits/verifier_js/generate_witness.js ./circuits/verifier_js/verifier.wasm ./circuits/test_input.json ./circuits/witness.wtns
 
 ##### Powers of Tau Ceremony
