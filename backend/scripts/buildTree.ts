@@ -65,33 +65,19 @@ function bufferToBigInt(buf: Buffer): bigint {
     root: root
   }));
 
-  fs.writeFileSync("./data/output/proofs.json", JSON.stringify({ entries }, null, 2));
+  // format proof entries as JSON and save to file
+  // key: leaf, value: {pathElements, pathIndex, root}
+  const jsonData = entries.reduce((acc, entry) => {
+    acc[entry.leaf] = {
+      pathElements: entry.pathElements,
+      pathIndex: entry.pathIndex,
+      root: entry.root
+    };
+    return acc;
+  }, {} as any);
+
+  fs.writeFileSync("./data/output/proofs.json", JSON.stringify(jsonData, null, 2));
   console.log("Proofs saved to ./data/output/proofs.json");
   console.log("Tree depth:", tree.getDepth());
 
-  /*
-  // Debug: run through one proof manually
-  const proof = tree.getProof(leaves[0]); // first runner
-  let cur = bufferToBigInt(leaves[0]); // start at leaf
-  console.log("Start leaf:", cur.toString());
-
-
-  // debugging: compute Poseidon step
-  function poseidonStep(cur: bigint, pathElement: bigint, selector: number): bigint {
-    const left = poseidon([pathElement, cur]);
-    const right = poseidon([cur, pathElement]);
-    return selector === 0 ? poseidon.F.toObject(left) : poseidon.F.toObject(right);
-  }
-
-
-  proof.forEach((p, i) => {
-    const pathEl = bufferToBigInt(p.data);
-    const sel = p.position === "right" ? 1 : 0;
-    cur = poseidonStep(cur, pathEl, sel);
-    console.log(`Level ${i}: cur=${cur.toString()} (sel=${sel}, pathEl=${pathEl})`);
-  });
-
-  console.log("Final JS root from proof:", cur.toString());
-  console.log("Tree root:", root);
-  */
 })();

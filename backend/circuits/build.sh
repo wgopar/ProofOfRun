@@ -9,17 +9,24 @@ circom ./circuits/verifier.circom --r1cs --wasm -o ./circuits -l node_modules/ci
 
 ##### generate witness
 # Prepare input for witness generation
-jq '{ 
-      leaf: .entries[0].leaf,
-      pathElements: .entries[0].pathElements, 
-      pathIndex: .entries[0].pathIndex,
-      root
-    }' ./data/output/proofs.json > ./circuits/test_input.json
+jq 'to_entries 
+    | .[0]
+    |  {
+          leaf: .key,
+          pathElements: .value.pathElements,
+          pathIndex: .value.pathIndex,
+          root: .value.root 
+        }' ./data/output/proofs.json > ./circuits/test_input.json
 
 # store root in single json key-value pair for easy import in hardhat
-jq '{ 
-      value: .root
-    }' ./data/output/proofs.json > ./circuits/merkleRoot.json
+jq 'to_entries 
+    | .[0]
+    | {
+        value: .value.root
+      }' ./data/output/proofs.json > ./circuits/merkleRoot.json
+
+
+exit 0
 
 node ./circuits/verifier_js/generate_witness.js ./circuits/verifier_js/verifier.wasm ./circuits/test_input.json ./circuits/witness.wtns
 
