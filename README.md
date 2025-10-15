@@ -37,15 +37,50 @@ ProofOfRun/
 │   └── package.json
 │
 └── README.md
+```
+
+`npm run scrape`
 
 
+Install all project dependencies:
+`pnpm install`
 
-npm run build-tree --> output merkle tree to fileo
 
+Data:
 
+```
+[
+  {
+    "bib": "#705",
+    "time": "2:25:49"
+  },
+  {
+    "bib": "#17",
+    "time": "2:28:10"
+  },
+  {
+    "bib": "#6",
+    "time": "2:33:00"
+  },
+  {
+    "bib": "#853",
+    "time": "2:33:24"
+  },
+  {
+    "bib": "#873",
+    "time": "2:35:19"
+  },
+  {
+    "bib": "#3",
+    "time": "2:35:31"
+  },
+  {
+    "bib": "#56",
+    "time": "2:35:50"
+  }
+]
+```
 
-Circom
----
-Inputs
-* Private inputs: poseidon(bib,time)
-* Public inputs: merkle root.
+`npm run build-tree`
+
+`sh ./backend/circuits/build.sh`

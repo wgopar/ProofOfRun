@@ -1,6 +1,6 @@
 // src/components/ProofForm.tsx
 import React, { useState } from "react";
-import { submitProof } from "../zk/proofService";
+import { submitProof } from "../zk/proofService.js";
 
 
 export const ProofForm: React.FC = () => {

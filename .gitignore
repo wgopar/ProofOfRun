@@ -14,11 +14,17 @@ node_modules/
 *.r1cs
 *.sym
 *.ptau
-*.zkey
 *.wtns
 
+# Circom zkey and verification key/proof files
+verifier_0000.zkey
+verifier_0001.zkey
+verification_key.json
+public.json
+proof.json
+test_input.json
+
 # SnarkJS / proof outputs
-*.json
 *.dat
 *.key
 
@@ -30,3 +36,22 @@ build/
 artifacts/
 output/
 verifier_js/
+
+# VSCode settings
+.vscode/
+
+# Hardhat build artifacts
+cache/
+typechain/
+typechain-types/
+coverage/
+coverage.json
+
+# Hardhat deployment files (if using hardhat-deploy)
+deployments/
+deployments.json
+
+# Hardhat output
+out/
+
+backend/data/*
