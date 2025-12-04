@@ -1,4 +1,4 @@
-# ProofOfRun
+# ProofOfRun (WIP)
 
 ```
 ProofOfRun/
