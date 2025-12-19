@@ -1,4 +1,4 @@
-# Proof of Run
+# Proof of Run - Proof of Concept
 
 > Privacy-preserving marathon verification using Zero-Knowledge Proofs
 
