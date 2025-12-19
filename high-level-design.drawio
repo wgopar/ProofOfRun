@@ -1,0 +1,76 @@
+<mxfile host="65bd71144e">
+    <diagram id="esa_rwDQYA_tDClABLbM" name="Page-1">
+        <mxGraphModel dx="937" dy="644" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="11" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="155" y="270" width="550" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Send Leaf" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="2" target="14" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Front End" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="100" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Submit&amp;nbsp;" style="edgeStyle=none;html=1;" parent="1" target="2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="80" y="140" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="30" value="NO" style="edgeStyle=none;html=1;" parent="1" source="14" target="29" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="YES" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="14" target="32" edge="1">
+                    <mxGeometry x="0.0962" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="Proof Exists?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="295" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="Backend" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="145" y="240" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="29" target="2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="550" y="140"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="29" value="Return" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="305" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="Verifier Results" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="32" target="2" edge="1">
+                    <mxGeometry x="-0.8737" relative="1" as="geometry">
+                        <mxPoint x="751" y="560" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="760" y="560"/>
+                            <mxPoint x="760" y="140"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="32" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="460" width="550" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="Ethereum" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="145" y="430" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" style="edgeStyle=none;html=1;" parent="1" source="34" target="36" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="VerifySanFranciscoMarathon.sol" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="170" y="490" width="490" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="Groth16Verifier" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="265" y="570" width="300" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="User" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#232F3E;fillColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.user;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="110" width="60" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

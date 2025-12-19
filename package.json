@@ -1,0 +1,14 @@
+{
+  "name": "proof-of-run",
+  "version": "1.0.0",
+  "description": "ZK Proof of Running",
+  "keywords": [],
+  "author": "William Mendoza Gopar",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "hardhat"
+  ],
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.1"
+}
