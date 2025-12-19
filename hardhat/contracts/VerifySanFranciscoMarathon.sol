@@ -43,6 +43,7 @@ contract VerifySanFranciscoMarathon is Groth16Verifier {
         marathonName = "San Francisco Marathon 2025";
         marathonDate = "July 27th, 2025";
         distanceinMeters = "42195"; // 42.195 km
+        verifiedRunnersCount = 0;
         owner = msg.sender;
         merkleRoot = _root;
     }
@@ -91,7 +92,6 @@ contract VerifySanFranciscoMarathon is Groth16Verifier {
 
         verifiedRunners[msg.sender] = true;
         verifiedRunnersCount += 1;
-        
         emit RunnerVerified(msg.sender);
         return true;
     }

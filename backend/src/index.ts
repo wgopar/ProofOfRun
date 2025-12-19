@@ -6,13 +6,20 @@ import path, { join } from "path";
 import { fileURLToPath } from "url";
 import { readFile } from 'fs/promises';
 import { submitProof } from "./zkHelper.js"; 
-import { getVerifierContract } from './contractHelper.js';
+import { getVerifierContract } from "./contractHelper.js";
+import { getVerifiedRunnersCount } from "./contractHelper.js";
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:5173", //  React dev server
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 app.use((req, res, next) => {
   logger.info({ method: req.method, url: req.originalUrl }, "Incoming request");
   next();
@@ -40,14 +47,29 @@ const proofsJson = JSON.parse(proofs);
 
 // Setup provider & signer
 const provider = new JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
-// const signer = new ethers.Wallet(process.env.ACCOUNT_PRIVATE_KEY!, provider);
 
-// Example API: health check
+// GET /runners/verified/count
+// Fetches the total number of runners verified on-chain via the Verifier contract.
+// This endpoint reads from the smart contract (read-only call) and returns the count as JSON.
+// Used by the frontend dashboard to display global verification stats.
+app.get("/runners/verified/count", async (req, res) => {
+  // read from contract
+  let  numRunners = await getVerifiedRunnersCount();
+  res.json({ verifiedRunners: numRunners });
+});
+
+/*
+Want this endpoing created but look into emitted events on contract and use Alchemy/Infura API to get list of verified runners
+app.get("/runners/verified" , async (req, res) => {
+  // Return list of verified runners (bib numbers)
+  const runners = Object.keys(proofsJson);
+  res.json({ verifiedRunners: runners });
+});*/
+
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-// Example API: verify leaf
 app.post("/verify", async (req, res) => {
   const { leaf } = req.body;
   logger.info({ leaf }, "Verification request received");
